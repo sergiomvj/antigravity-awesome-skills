@@ -104,8 +104,6 @@ bootstrapApplication(AppComponent, {
 
 ---
 
----
-
 ## 2. Async Operations & Waterfalls (CRITICAL)
 
 ### Eliminate Sequential Data Fetching

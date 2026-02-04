@@ -32,12 +32,17 @@ The `SKILL.md` file includes:
 
 ## Quick Reference
 
-```typescript
-// Only show loading without data
-if (error()) return <ErrorState />
-if (loading() && !data()) return <SkeletonState />
-if (!data()?.length) return <EmptyState />
-return <DataDisplay data={data()} />
+```html
+<!-- Angular template pattern for data states -->
+@if (error()) {
+<app-error-state [error]="error()" (retry)="load()" />
+} @else if (loading() && !data()) {
+<app-skeleton-state />
+} @else if (!data()?.length) {
+<app-empty-state message="No items found" />
+} @else {
+<app-data-display [data]="data()" />
+}
 ```
 
 ## Version
