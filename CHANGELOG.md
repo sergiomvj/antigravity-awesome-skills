@@ -7,7 +7,268 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [4.10.0] - 2026-02-06 - "Composio Automation + .NET Backend"
+
+> A major expansion focused on practical app automation and stronger backend engineering coverage.
+
+### Added
+
+- **79 new skills total**.
+- **78 Composio/Rube automation skills** (PR #64), with operational playbooks for:
+- CRM and sales stacks (`HubSpot`, `Pipedrive`, `Salesforce`, `Zoho CRM`, `Close`).
+- Collaboration and project tools (`Notion`, `ClickUp`, `Asana`, `Jira`, `Confluence`, `Trello`, `Monday`).
+- Messaging and support channels (`Slack`, `Discord`, `Teams`, `Intercom`, `Freshdesk`, `Zendesk`).
+- Marketing and analytics systems (`Google Analytics`, `Mixpanel`, `PostHog`, `Segment`, `Mailchimp`, `Klaviyo`).
+- Infra/dev tooling (`GitHub`, `GitLab`, `CircleCI`, `Datadog`, `PagerDuty`, `Vercel`, `Render`).
+- **1 new `dotnet-backend` skill** (PR #65) with:
+- ASP.NET Core 8+ API patterns (Minimal APIs + controller-based).
+- EF Core usage guidance, JWT auth examples, and background worker templates.
+- Explicit trigger guidance and documented limitations.
+- **Registry size increased to 713 skills** (from 634).
+
+### Changed
+
+- Regenerated and synced discovery artifacts after merging both PRs:
+- `README.md` (counts + contributor updates)
+- `skills_index.json`
+- `CATALOG.md`
+- `data/catalog.json`
+- `data/bundles.json`
+- `data/aliases.json`
+- Release metadata updated for `v4.10.0`:
+- `package.json` / `package-lock.json` version bump
+- GitHub Release object published with release notes
+
+### Contributors
+
+- [@sohamganatra](https://github.com/sohamganatra) - 78 Composio automation skills (PR #64)
+- [@Nguyen-Van-Chan](https://github.com/Nguyen-Van-Chan) - .NET backend skill (PR #65)
+
+## [4.9.0] - 2026-02-05 - "OSS Hunter & Universal Skills"
+
+> Automated contribution hunting and universal CLI AI skills (Audio, YouTube, Prompt Engineering).
+
+### Added
+
+- **New Skill**: `oss-hunter` – Automated tool for finding high-impact Open Source contributions (Good First Issues, Help Wanted) in trending repositories.
+- **New Skill**: `audio-transcriber` – Transform audio recordings into professional Markdown with Whisper integration.
+- **New Skill**: `youtube-summarizer` – Generate comprehensive summaries/notes from YouTube videos.
+- **New Skill**: `prompt-engineer` (Enhanced) – Now includes 11 optimization frameworks (RTF, RISEN, etc.).
+- **Registry**: 634 skills (from 626). Catalog regenerated.
+
+### Changed
+
+- **CLI AI Skills**: Merged core skills from `ericgandrade/cli-ai-skills`.
+
+### Contributors
+
+- [@jackjin1997](https://github.com/jackjin1997) - OSS Hunter (PR #61)
+- [@ericgandrade](https://github.com/ericgandrade) - CLI AI Skills (PR #62)
+
+## [4.7.0] - 2026-02-03 - "Installer Fix & OpenCode Docs"
+
+> Critical installer fix for Windows and OpenCode documentation completion.
+
+### Fixed
+
+- **Installer**: Resolved `ReferenceError` for `tagArg` variable in `bin/install.js` ensuring correct execution on Windows/PowerShell (PR #53).
+
+### Documentation
+
+- **OpenCode**: Completed documentation for OpenCode integration in `README.md`.
+
 ---
+
+## [4.6.0] - 2026-02-01 - "SPDD & Radix UI Design System"
+
+> Agent workflow docs (SPDD) and Radix UI design system skill.
+
+### Added
+
+- **New Skill**: `radix-ui-design-system` – Build accessible design systems with Radix UI primitives (headless, theming, WCAG, examples).
+- **Docs**: `skills/SPDD/` – Research, spec, and implementation workflow docs (1-research.md, 2-spec.md, 3-implementation.md).
+
+### Registry
+
+- **Total Skills**: 626 (from 625). Catalog regenerated.
+
+---
+
+## [4.5.0] - 2026-01-31 - "Stitch UI Design"
+
+> Expert prompting guide for Google Stitch AI-powered UI design tool.
+
+### Added
+
+- **New Skill**: `stitch-ui-design` – Expert guide for creating effective prompts for Google Stitch AI UI design tool (Gemini 2.5 Flash). Covers prompt structure, specificity techniques, iteration strategies, design-to-code workflows, and 10+ examples for landing pages, mobile apps, and dashboards.
+
+### Changed
+
+- **Documentation**: Clarified in README.md and GETTING_STARTED.md that installation means cloning the full repo once; Starter Packs are curated lists to discover skills by role, not a different installation method (fixes [#44](https://github.com/sickn33/antigravity-awesome-skills/issues/44)).
+
+### Registry
+
+- **Total Skills**: 625 (from 624). Catalog regenerated.
+
+### Credits
+
+- [@ALEKGG1](https://github.com/ALEKGG1) – stitch-ui-design (PR #45)
+- [@CypherPoet](https://github.com/CypherPoet) – Documentation clarity (#44)
+
+---
+
+## [4.4.0] - 2026-01-30 - "fp-ts skills for TypeScript"
+
+> Three practical fp-ts skills for TypeScript functional programming.
+
+### Added
+
+- **New Skills** (from [whatiskadudoing/fp-ts-skills](https://github.com/whatiskadudoing/fp-ts-skills)):
+  - `fp-ts-pragmatic` – Pipe, Option, Either, TaskEither without academic jargon.
+  - `fp-ts-react` – Patterns for fp-ts with React 18/19 and Next.js 14/15 (state, forms, data fetching).
+  - `fp-ts-errors` – Type-safe error handling with Either and TaskEither.
+
+### Registry
+
+- **Total Skills**: 624 (from 621). Catalog regenerated.
+
+---
+
+## [4.3.0] - 2026-01-29 - "VoltAgent Integration & Context Engineering Suite"
+
+> 61 new skills from VoltAgent/awesome-agent-skills: official team skills and context engineering suite.
+
+### Added
+
+- **61 new skills** from [VoltAgent/awesome-agent-skills](https://github.com/VoltAgent/awesome-agent-skills):
+  - **Official (27)**: Sentry (commit, create-pr, find-bugs, iterate-pr), Trail of Bits (culture-index, fix-review, sharp-edges), Expo (expo-deployment, upgrading-expo), Hugging Face (hugging-face-cli, hugging-face-jobs), Vercel, Google Stitch (design-md), Neon (using-neon), n8n (n8n-code-python, n8n-mcp-tools-expert, n8n-node-configuration), SwiftUI, fal.ai (fal-audio, fal-generate, fal-image-edit, fal-platform, fal-upscale, fal-workflow), deep-research, imagen, readme.
+  - **Community (34)**: Context suite (context-fundamentals, context-degradation, context-compression, context-optimization, multi-agent-patterns, memory-systems, evaluation), frontend-slides, linear-claude-skill, skill-rails-upgrade, terraform-skill, tool-design, screenshots, automate-whatsapp, observe-whatsapp, aws-skills, ui-skills, vexor, pypict-skill, makepad-skills, threejs-skills, claude-scientific-skills, claude-win11-speckit-update-skill, security-bluebook-builder, claude-ally-health, clarity-gate, beautiful-prose, claude-speed-reader, skill-seekers, varlock-claude-skill, superpowers-lab, nanobanana-ppt-skills, x-article-publisher-skill, ffuf-claude-skill.
+
+### Registry
+
+- **Total Skills**: 614 (from 553). Catalog and SOURCES.md updated.
+
+### Credits
+
+- VoltAgent/awesome-agent-skills and official teams (Sentry, Trail of Bits, Expo, Hugging Face, Vercel Labs, Google Labs, Neon, fal.ai).
+
+---
+
+## [4.0.0] - 2026-01-28 - "The Enterprise Era"
+
+> **A massive integration of 300+ Enterprise skills, transforming Antigravity into a complete operating system for AI agents.**
+
+### Added
+
+- **Massive Skill Injection**: Merged 300+ Enterprise skills from `rmyndharis/antigravity-skills`.
+- **New Categories**:
+  - **Architecture & Design**: `backend-architect`, `c4-architecture`.
+  - **Data & AI**: `rag-engineer`, `langchain-architecture`.
+  - **Security**: `security-auditor`, `cloud-pentesting`.
+- **Catalog System**: Introduced `CATALOG.md` and `scripts/build-catalog.js` for automated, table-based skill discovery.
+
+### Changed
+
+- **Documentation Overhaul**:
+  - Removed the legacy 250+ row skill table from `README.md`.
+  - Restructured `README.md` to focus on high-level domains.
+  - Replaced static registry with dynamic `CATALOG.md`.
+- **Version Bump**: Major version update to 4.0.0 reflecting the doubling of skill capacity (247 -> 550+).
+
+### Credits
+
+- **[@rmyndharis](https://github.com/rmyndharis)** - For the massive contribution of 300+ Enterprise skills and valid catalog logic.
+- **[@sstklen](https://github.com/sstklen)** & **[@rookie-ricardo](https://github.com/rookie-ricard)** - Continued community support.
+
+## [3.4.0] - 2026-01-27 - "Voice Intelligence & Categorization"
+
+### Added
+
+- **New Skill**: `voice-ai-engine-development` - Complete toolkit for building real-time voice agents (OpenAI Realtime, Vapi, Deepgram, ElevenLabs).
+- **Categorization**: Major README update introducing a concise "Features & Categories" summary table.
+
+### Changed
+
+- **README**: Replaced text-heavy category lists with a high-level summary table.
+- **Registry**: Synced generic skill count (256) across documentation.
+
+### Contributors
+
+- [@sickn33](https://github.com/sickn33) - Voice AI Engine (PR #33)
+- [@community](https://github.com/community) - Categorization Initiative (PR #32)
+
+## [3.3.0] - 2026-01-26 - "News & Research"
+
+### Added
+
+- **New Skills**:
+  - `last30days`: Research any topic from the last 30 days on Reddit + X + Web.
+  - `daily-news-report`: Generate daily news reports from multiple sources.
+
+### Changed
+
+- **Registry**: Updated `skills_index.json` and `README.md` registry (Total: 255 skills).
+
+## [3.2.0] - 2026-01-26 - "Clarity & Consistency"
+
+### Changed
+
+- **Skills Refactoring**: Significant overhaul of `backend-dev-guidelines`, `frontend-design`, `frontend-dev-guidelines`, and `mobile-design`.
+  - **Consolidation**: Merged fragmented documentation into single, authoritative `SKILL.md` files.
+  - **Final Laws**: Introduced "Final Laws" sections to provide strict, non-negotiable decision frameworks.
+  - **Simplification**: Removed external file dependencies to improve context retrieval for AI agents.
+
+### Fixed
+
+- **Validation**: Fixed critical YAML frontmatter formatting issues in `seo-fundamentals`, `programmatic-seo`, and `schema-markup` that were blocking strict validation.
+- **Merge Conflicts**: Resolved text artifact conflicts in SEO skills.
+
+## [3.1.0] - 2026-01-26 - "Stable & Deterministic"
+
+### Fixed
+
+- **CI/CD Drift**: Resolved persistent "Uncommitted Changes" errors in CI by making the index generation script deterministic (sorting by name + ID).
+- **Registry Sync**: Synced `README.md` and `skills_index.json` to accurately reflect all 253 skills.
+
+### Added (Registry Restore)
+
+The following skills are now correctly indexed and visible in the registry:
+
+- **Marketing & Growth**: `programmatic-seo`, `schema-markup`, `seo-fundamentals`, `form-cro`, `popup-cro`, `analytics-tracking`.
+- **Security**: `windows-privilege-escalation`, `wireshark-analysis`, `wordpress-penetration-testing`, `writing-plans`.
+- **Development**: `tdd-workflow`, `web-performance-optimization`, `webapp-testing`, `workflow-automation`, `zapier-make-patterns`.
+- **Maker Tools**: `telegram-bot-builder`, `telegram-mini-app`, `viral-generator-builder`.
+
+### Changed
+
+- **Documentation**: Added `docs/CI_DRIFT_FIX.md` as a canonical reference for resolving drift issues.
+- **Guidance**: Updated `docs/GETTING_STARTED.md` counts to match the full registry (253+ skills).
+- **Maintenance**: Updated `MAINTENANCE.md` with strict protocols for handling generated files.
+
+## [3.0.0] - 2026-01-25 - "The Governance Update"
+
+### Added
+
+- **Governance & Security**:
+  - `docs/QUALITY_BAR.md`: Defined 5-point validation standard (Metadata, Risk, Triggers).
+  - `docs/SECURITY_GUARDRAILS.md`: Enforced "Authorized Use Only" for offensive skills.
+  - `CODE_OF_CONDUCT.md`: Adhered to Contributor Covenant v2.1.
+- **Automation**:
+  - `scripts/validate_skills.py`: Automated Quality Bar enforcement (Soft Mode supported).
+  - `.github/workflows/ci.yml`: Automated PR checks.
+  - `scripts/generate_index.py`: Registry generation with Risk & Source columns.
+- **Experience**:
+  - `docs/BUNDLES.md`: 9 Starter Packs (Essentials, Security, Web, Agent, Game Dev, DevOps, Data, Testing, Creative).
+  - **Interactive Registry**: README now features Risk Levels (🔴/🟢/🟣) and Collections.
+- **Documentation**:
+  - `docs/EXAMPLES.md`: Cookbook with 3 real-world scenarios.
+  - `docs/SOURCES.md`: Legal ledger for attributions and licenses.
+  - Release announcements are documented in this CHANGELOG.
+
+### Changed
+
+- **Standardization**: All 250+ skills are now validated against the new Quality Bar schema.
+- **Project Structure**: Introduced `docs/` folder for scalable documentation.
 
 ## [2.14.0] - 2026-01-25 - "Web Intelligence & Windows"
 
@@ -141,7 +402,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `cc-skill-project-guidelines-example`
   - `cc-skill-security-review`
   - `cc-skill-strategic-compact`
-- **Documentation**: New `WALKTHROUGH.md` for import process details.
+- **Documentation**: New `docs/WALKTHROUGH.md` for import process details.
 
 ### Changed
 
