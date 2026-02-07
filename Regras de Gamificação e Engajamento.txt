@@ -1,0 +1,127 @@
+Regras de Gamificação e Engajamento
+
+O leitor participa ativamente e é recompensado por interações inteligentes:
+
+Ação	Pontos	Recompensa
+Leitura de artigo até o fim	+10	“Curioso Informado” badge
+Comentário relevante (avaliado por IA + comunidade)	+20	“Voz Ativa” badge
+Compartilhar artigo	+15	XP + chance em ranking semanal
+Corrigir erro factual (validação por moderação)	+50	“Verificador” medalha
+Indicar tema de interesse para cobertura	+30	“Editor Convidado” status
+
+Pontuação acumulada cria níveis de reputação:
+
+🪶 Leitor Casual (0–100)
+
+📚 Analista Iniciante (100–300)
+
+🧭 Analista Pleno (300–700)
+
+🧠 Editor Comunitário (700–1500)
+
+🏛️ SuperFace (1500+)
+
+
+Automação Inteligente (via N8N)
+
+Fluxos automáticos executarão:
+
+Coleta RSS/API → detecta novas notícias.
+
+Classificação Semântica → IA decide categoria.
+
+Contextualização → GPT/Mistral cria artigo expandido.
+
+Publicação Automática → envia para Supabase (tabela articles).
+
+Distribuição Multicanal → redes sociais, newsletter e push.
+
+Engajamento → sistema registra leituras, cliques, comentários.
+
+Gamificação & Notificação → atualiza ranking e envia alertas.
+
+
+Experiência do Usuário
+Usuário Leitor
+
+Feed personalizado (categorias + preferências).
+
+Histórico de leituras e pontuação.
+
+Recomendação baseada em afinidade.
+
+Chat contextual: “Explique essa notícia pra mim”.
+
+
+Usuário Editor (Admin)
+
+Painel com fluxo em tempo real das notícias capturadas.
+
+Moderação dos artigos gerados por IA.
+
+Estatísticas por categoria, origem e engajamento.
+
+
+APIs e Funções
+a) GET /api/articles
+
+Retorna artigos filtrados por categoria, data e relevância.
+Parâmetros: ?category=&sort=&limit=
+
+b) POST /api/articles/new
+
+Recebe conteúdo gerado via N8N (payload JSON):
+
+{
+  "title": "EUA e China firmam novo acordo climático",
+  "content": "...",
+  "category": "World Pulse",
+  "context_summary": "...",
+  "source_url": "https://cnn.com/...",
+  "tags": ["climate", "agreement", "china", "usa"]
+}
+
+c) POST /api/user/reaction
+
+Registra ação de gamificação (like, share, insight).
+
+d) POST /api/user/achievement
+
+Verifica e atribui novos badges conforme pontuação.
+
+e) GET /api/leaderboard
+
+Ranking global e semanal.
+
+f) GET /api/context/:id
+
+Retorna explicação expandida do artigo (chama LLM + RAG interno).
+
+
+Integrações via N8N
+
+Webhook de Entrada: /api/articles/new
+
+Nodes:
+
+HTTP Request (RSS / News API)
+
+Text Split / JSON Parser
+
+AI Summarizer (OpenAI/Mistral)
+
+Category Classifier
+
+Context Generator
+
+Image Generator (Unsplash / DALL·E)
+
+Supabase Insert
+
+Telegram / WhatsApp Alert (via Evolution API)
+
+Social Media Post (Twitter/X, Threads, Instagram)
+
+
+
+

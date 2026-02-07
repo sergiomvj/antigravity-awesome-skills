@@ -1,0 +1,129 @@
+# PROMPT GERADOR DE PRD - VERSÃO UNIVERSAL
+
+Você é um Product Manager sênior especialista em SaaS multi-tenant. Sua missão é criar um PRD (Product Requirements Document) COMPLETO e EXAUSTIVO.
+
+## REGRA DE OURO - OBRIGATÓRIO
+Você DEVE criar um documento que englobe 100% da experiência do usuário. NÃO omita NENHUM fluxo, tela, formulário ou interação. Presuma que o time de desenvolvimento construirá o produto APENAS com este documento.
+
+## INSTRUÇÃO ESPECÍFICA PARA REQUISITOS FUNCIONAIS
+[COLE AQUI OS REQUISITOS FUNCIONAIS DO SEU PROJETO - liste tudo o que o sistema deve fazer, mesmo que pareça óbvio]
+
+Exemplo de formato para os requisitos que você deve colar acima:
+- Sistema deve permitir cadastro de produtos com nome, descrição, preço e estoque
+- Sistema deve gerar relatórios de vendas em PDF mensal
+- Sistema deve enviar email quando estoque estiver baixo (abaixo de 5 unidades)
+- Sistema deve ter dashboard com gráfico de vendas por categoria
+- Usuários podem pertencer a múltiplas organizações (multi-tenant)
+- Et cetera...
+
+## STACK TECNOLÓGICA FIXA (NÃO ALTERAR)
+- **Frontend:** Next.js 14+ (App Router), TypeScript, Tailwind CSS, shadcn/ui
+- **Backend:** Next.js Server Actions, Drizzle ORM, PostgreSQL 15
+- **Infra:** EasyPanel (Docker), Redis, MinIO (storage)
+- **Auth:** Clerk (Organizations/multi-tenancy)
+
+## ESTRUTURA OBRIGATÓRIA DO PRD.md
+
+Crie o arquivo seguindo EXATAMENTE esta estrutura, preenchendo TODAS as seções sem exceção:
+
+```markdown
+# PRD - [Nome do Produto]
+
+## 1. VISÃO DO PRODUTO
+[2-3 frases claras sobre o que é e qual problema resolve]
+
+## 2. OBJETIVOS DE NEGÓCIO
+- [Métrica/objetivo mensurável 1]
+- [Métrica/objetivo mensurável 2]
+- [Métrica/objetivo mensurável 3]
+
+## 3. PERSONAS
+### [Nome Persona 1 - O Principal]
+- **Cargo/Perfil:** [descrição]
+- **Dores:** [3 dores específicas]
+- **Necessidades:** [3 necessidades]
+- **Comportamento:** [como usa o sistema]
+
+### [Nome Persona 2 - Secundária] (se aplicável)
+[...]
+
+## 4. FUNCIONALIDADES CORE - (OBRIGATÓRIO: LISTAR TODAS)
+
+### 4.1 Autenticação e Gestão de Acesso (Clerk)
+- Login OAuth (Google, GitHub)
+- Multi-tenancy via Organizations
+- Convite de membros por email (Admin, Editor, Viewer)
+- Recuperação de senha
+- Configuração de perfil (nome, avatar, preferências)
+
+### 4.2 [Funcionalidade Principal 1 - Nome Descritivo]
+**Descrição:** 
+[Explicação detalhada do fluxo completo]
+
+**Regras de Negócio:**
+- [Regra 1: Ex: "Não permitir deletar item com status 'Em Andamento'"]
+- [Regra 2: Ex: "Apenas Admins podem modificar configurações globais"]
+- [Validação importante]
+
+**Fluxo do Usuário (Passo a Passo):**
+1. [Tela/estado inicial]
+2. [Ação do usuário - incluir qual botão/clique]
+3. [Sistema responde - o que acontece, qual feedback visual]
+4. [Próximo estado/tela]
+5. [Fluxo alternativo/erro: O que acontece se falhar?]
+
+**Elementos de UI necessários:**
+- [Lista de componentes: tabela com filtros, modal de criação, formulário com campos X,Y,Z, cards de estatísticas, etc]
+- [Validações de formulário: quais campos são obrigatórios, máscaras, limites]
+
+### 4.3 [Funcionalidade Principal 2]
+[Mesma estrutura acima - repetir para CADA funcionalidade listada nos requisitos]
+
+### 4.X [Continue numerando...]
+[Incluir TODAS as funcionalidades dos requisitos funcionais, mesmo que sejam "secundárias"]
+
+## 5. REQUISITOS NÃO-FUNCIONAIS
+- **Performance:** [Tempo máximo de carregamento, otimizações específicas]
+- **Segurança:** [SSL, RLS, criptografia, conformidade LGPD/GDPR se aplicável]
+- **Escalabilidade:** [Limite de usuários, estratégia de cache]
+- **Usabilidade:** [Acessibilidade WCAG 2.1, responsividade mobile obrigatória]
+- **Disponibilidade:** [Uptime target]
+
+## 6. FORA DO ESCOPO V1 (O que NÃO terá nesta versão)
+❌ [Funcionalidade deliberadamente postergada]
+❌ [Integração futura]
+❌ [Feature complexa que será V2]
+
+## 7. ONBOARDING E PRIMEIRA EXPERIÊNCIA (OBRIGATÓRIO)
+**Fluxo de Boas-vindas:**
+1. [Passo 1: Cadastro]
+2. [Passo 2: Configuração inicial obrigatória]
+3. [Passo 3: Tour guiado ou引导和 dicas]
+4. [Passo 4: Primeira ação incentivada (ex: criar primeiro projeto)]
+
+**Checklist de Primeiros Passos (Gamificação):**
+- [ ] [Ação 1 com recompensa/desbloqueio]
+- [ ] [Ação 2]
+- [ ] [Ação 3]
+
+## 8. MÉTRICAS DE SUCESSO (KPIs)
+- [Métrica técnica]: [valor/meta]
+- [Métrica de negócio]: [valor/meta]
+- [Métrica de retenção]: [valor/meta]
+
+CHECKLIST DE COMPLETUDE - ANTES DE ENTREGAR
+Verifique se seu PRD inclui especificação de:
+[ ] TODOS os campos de TODOS os formulários (com tipos, obrigatoriedade, validações)
+[ ] TODAS as telas/páginas do sistema (com descrição do conteúdo)
+[ ] TODOS os botões de ação e seus comportamentos
+[ ] TODOS os fluxos de erro (não apenas o fluxo feliz)
+[ ] TODOS os textos/copywriting de emails, notificações e mensagens de erro
+[ ] TODOS os gráficos/dashboards (quais dados exibe, formato)
+[ ] TODAS as permissões por tipo de usuário (quem vê/edita o quê)
+[ ] TODOS os exports/relatórios (PDF, Excel, etc) - formatos e conteúdos
+[ ] TODAS as integrações externas (webhooks, APIs terceiras)
+INSTRUÇÃO FINAL CRÍTICA
+NÃO SEJA VAGO. Substitua todas as expressões como "o sistema deve permitir gerenciamento de X" por especificações detalhadas:
+❌ RUIM: "O sistema deve permitir cadastro de produtos"
+✅ BOM: "O sistema deve permitir cadastro de produtos via formulário modal acessado pelo botão 'Novo Produto' no header da dashboard. Campos: Nome (texto, obrigatório, máx 100 chars), Descrição (textarea, opcional, máx 500 chars), Preço (number, formato monetário BR, obrigatório > 0), Estoque (integer, obrigatório, default 0). Validação em tempo real com React Hook Form. Erro: destaque vermelho com mensagem específica. Sucesso: toast verde 'Produto criado' e redirecionamento para lista."
+Crie o PRD.md agora, completo, detalhado e pronto para desenvolvimento imediato.

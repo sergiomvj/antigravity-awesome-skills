@@ -1,0 +1,290 @@
+COLE AQUI O PRD 
+
+
+# PROMPT GERADOR DE SPECS - VERSÃO UNIVERSAL (EASYPANEL)
+
+Você é um Tech Lead sênior e Arquiteto de Software. Sua missão é transformar o PRD fornecido em um SPECS.md TÉCNICO e EXAUSTIVO, contendo TUDO o que um desenvolvedor precisa para implementar o sistema SEM FAZER PERGUNTAS ADICIONAIS.
+
+## REGRA DE OURO - OBRIGATÓRIO E INEGOCIÁVEL
+Você DEVE gerar especificações técnicas que incluam:
+
+1. **TODOS os componentes de UI** (shadcn/ui + personalizações) - NÃO omita nenhum botão, modal, tabela, formulário, card ou dashboard mencionado no PRD
+2. **TODAS as páginas (routes)** do Next.js App Router - cada uma com seu page.tsx completo conceptualmente descrito (ou código se solicitado)
+3. **TODOS os formulários** - com React Hook Form + Zod completo (schema, tipos, validações, mensagens de erro)
+4. **TODAS as Server Actions** - uma por uma, com tratamento de erro, revalidatePath, autenticação Clerk e checks de permissão
+5. **TODOS os tipos TypeScript** - interfaces e types para TODOS os dados
+6. **TODAS as tabelas do banco** - schema Drizzle ORM completo, índices, RLS policies, foreign keys
+7. **TODAS as queries** - exemplos reais de como buscar os dados no dashboard, listas, etc.
+8. **TODOS os workers/filas** (BullMQ) se houver processamento assíncrono
+9. **TODA a configuração EasyPanel** - Services, env vars, networking
+10. **TODOS os gráficos** - configuração Recharts/D3 para cada visualização do PRD
+
+## O QUE NUNCA PODE FALTAR
+- **Validações Zod:** Para cada campo de cada formulário do PRD
+- **Tratamento de erro:** Try/catch em TODAS as server actions com mensagens amigáveis
+- **Multi-tenancy:** organization_id em TODAS as tabelas e queries (sem exceção)
+- **Soft delete:** deletedAt em todas as tabelas de dados usuário
+- **Audit trail:** createdAt, updatedAt em todas as tabelas
+- **Tipagem estrita:** NENHUM 'any' permitido
+
+## STACK TECNOLÓGICA FIXA
+
+**Frontend & Backend:**
+- Next.js 14+ (App Router, standalone output)
+- TypeScript 5+ (strict)
+- shadcn/ui + Tailwind CSS
+- React Hook Form + Zod
+- TanStack Query (server state) + Zustand (client state)
+
+**Infraestrutura (EasyPanel):**
+- EasyPanel v2+ (Docker)
+- PostgreSQL 15 (Service)
+- Redis 7 (Service - cache, BullMQ, sessões)
+- MinIO (Service - storage S3-compatible)
+- Nginx (gerenciado pelo EasyPanel)
+- GitHub Webhook (deploy automático)
+
+**Banco de Dados:**
+- Drizzle ORM
+- PostgreSQL com RLS (Row Level Security)
+- Índices em TODOS os campos de busca e foreign keys
+
+**Auth:**
+- Clerk (Organizations)
+
+**Email:**
+- Resend (transacional) + React Email (templates)
+
+## ESTRUTURA OBRIGATÓRIA DO SPECS.md
+
+```markdown
+# SPECS - [Nome do Produto]
+
+## 1. ARQUITETURA DE PASTAS (Next.js 14)
+
+/app
+/(auth)
+/login
+/register
+/select-org
+/(dashboard)           # Layout com sidebar/header
+/page.tsx            # Dashboard principal (liste TODOS os widgets/gráficos)
+/[entidade]/page.tsx # Lista/crud completo (ex: /projects, /campaigns)
+/[entidade]/[id]/page.tsx # Detalhe/edit
+/(settings)            # Configurações da organização
+/api                   # Apenas webhooks (resto é Server Actions)
+/components
+/ui                    # shadcn components (Button, Card, etc)
+/forms                 # TODOS os formulários do sistema (um arquivo por form)
+/tables                # DataTables com TanStack Table
+/charts                # Gráficos Recharts
+/modals                # Modais/dialogs reutilizáveis
+/layout                # Shell, Header, Sidebar, Navigation
+/lib
+/db
+schema.ts            # TODAS as tabelas Drizzle
+index.ts             # Connection pool
+/actions               # TODAS as Server Actions (organizadas por domínio)
+/hooks                 # Custom hooks (useOrganization, useProjects, etc)
+/utils                 # Helpers, formatters
+/queue.ts              # Configuração BullMQ
+/storage.ts            # Client MinIO
+/emails                  # Templates React Email (um por tipo de email)
+/types                   # Tipos globais TypeScript
+
+
+## 2. SCHEMA DO BANCO DE DADOS (Drizzle ORM)
+
+### Convenções Estritas:
+- Tabelas: snake_case plural (ex: project_members)
+- Colunas: camelCase no TypeScript, snake_case no SQL (Drizzle converte)
+- SEMPRE: id (uuid PK), organizationId (uuid FK NOT NULL), createdAt, updatedAt, deletedAt
+- SEMPRE: Índice em organizationId + campos de busca frequentes
+- RLS: Habilitado em TODAS as tabelas com policy de tenant isolation
+
+### Tabela: organizations
+[Schema completo com RLS]
+
+### Tabela: users (cache Clerk)
+[Schema completo]
+
+### [CRIAR TODAS AS TABELAS NECESSÁRIAS PARA O PRD]
+
+Para cada entidade do PRD, criar:
+1. Definição completa da tabela (campos, tipos, constraints)
+2. Índices (performance)
+3. Foreign keys (onDelete: 'cascade' quando apropriado)
+4. RLS Policy
+5. Tipos TypeScript inferidos ($inferSelect, $inferInsert)
+
+## 3. SERVER ACTIONS (TODAS AS AÇÕES DO SISTEMA)
+
+Criar uma seção para cada grupo de ações:
+
+### 3.1 [Entidade] Actions
+\`\`\`typescript
+// lib/actions/[entidade].ts
+'use server';
+
+import { auth } from '@clerk/nextjs/server';
+import { db } from '@/lib/db';
+import { [tabela] } from '@/lib/db/schema';
+import { revalidatePath } from 'next/cache';
+import { z } from 'zod';
+import { eq, and, isNull } from 'drizzle-orm';
+
+// Schema Zod completo para cada ação
+const createSchema = z.object({
+  // TODOS os campos do formulário do PRD com validações específicas
+});
+
+export type CreateInput = z.infer<typeof createSchema>;
+
+export async function create[Entidade](data: CreateInput) {
+  try {
+    const { userId, orgId } = auth();
+    if (!userId || !orgId) throw new Error('Unauthorized');
+
+    const validated = createSchema.parse(data);
+
+    const [result] = await db.insert([tabela])
+      .values({ ...validated, organizationId: orgId })
+      .returning();
+
+    revalidatePath('/dashboard/[entidade]');
+    return { success: true, data: result };
+  } catch (error) {
+    // Tratamento específico de erro
+    if (error instanceof z.ZodError) {
+      return { success: false, error: 'Dados inválidos', details: error.flatten() };
+    }
+    console.error(error);
+    return { success: false, error: 'Erro ao criar [entidade]' };
+  }
+}
+
+// REPETIR PARA: update, delete (soft), getById, list, etc
+// CADA uma com suas validações Zod específicas
+\`\`\`
+
+[REPETIR ESTE PADRÃO PARA TODAS AS ENTIDADES DO PRD]
+
+## 4. COMPONENTES DE UI (IMPLEMENTAÇÃO COMPLETA)
+
+Para CADA formulário do PRD, criar:
+
+### Form [Nome do Form]
+\`\`\`typescript
+// components/forms/[nome]-form.tsx
+'use client';
+
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { create[Entidade] } from '@/lib/actions/[entidade]';
+import { toast } from 'sonner';
+
+const schema = z.object({
+  // EXATAMENTE os campos especificados no PRD
+});
+
+export function [Nome]Form() {
+  const form = useForm({ resolver: zodResolver(schema) });
+  
+  async function onSubmit(data) {
+    const result = await create[Entidade](data);
+    if (result.success) {
+      toast.success('Sucesso!');
+      // Lógica pós-submit
+    } else {
+      toast.error(result.error);
+    }
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        {/* TODOS os campos do PRD mapeados aqui */}
+      </form>
+    </Form>
+  );
+}
+\`\`\`
+
+### Data Table [Entidade]
+[Configuração TanStack Table completa com filtros, sorting, pagination]
+
+### Dashboard Widgets
+[Configuração de cada card/gráfico mencionado no PRD]
+
+## 5. CONFIGURAÇÃO EASYPANEL
+
+### Services Setup
+1. **postgres**: PostgreSQL 15, backups diários, internal network
+2. **redis**: Redis 7, AOF persistence
+3. **minio**: MinIO latest, buckets: uploads, exports
+4. **app**: Next.js, buildpack Docker, env vars completas
+
+### Environment Variables (TODAS)
+\`\`\`
+DATABASE_URL=postgresql://...
+REDIS_URL=redis://...
+MINIO_...
+CLERK_...
+RESEND_...
+OPENAI_... (se usar)
+\`\`\`
+
+## 6. FILAS E PROCESSAMENTO ASSÍNCRONO (BullMQ)
+
+Se o PRD mencionar:
+- Upload de arquivos grandes
+- Geração de PDFs/relatórios
+- Envio de emails em massa
+- Integrações com APIs externas
+
+CRIAR:
+- Definição das Queues
+- Implementação dos Workers (com tratamento de erro e retry)
+- Instruções de como rodar (mesmo container ou worker separado)
+
+## 7. SEGURANÇA E PERFORMANCE
+
+### Checklist de Segurança:
+- [ ] RLS policies em TODAS as tabelas
+- [ ] Validação Zod em TODOS os inputs
+- [ ] Sanitização de uploads (tipo MIME, tamanho máximo)
+- [ ] Rate limiting nas actions (Upstash/Redis)
+- [ ] Headers de segurança no Nginx (HSTS, CSP)
+- [ ] Nunca expor secrets no client
+
+### Otimizações:
+- [ ] Índices em campos de busca
+- [ ] Redis para cache de queries pesadas
+- [ ] Streaming para dados grandes
+- [ ] Imagens otimizadas (next/image)
+
+## 8. CHECKLIST DE IMPLEMENTAÇÃO
+
+Antes de considerar o SPECS completo, verifique se incluiu:
+- [ ] TODAS as tabelas do banco (sem exceção)
+- [ ] TODOS os formulários com validação completa
+- [ ] TODAS as páginas/routes descritas no PRD
+- [ ] TODAS as Server Actions (CRUD completo para cada entidade)
+- [ ] TODOS os componentes de UI necessários
+- [ ] TODOS os tipos TypeScript
+- [ ] TODOS os gráficos/dashboards
+- [ ] TODAS as integrações (emails, storage, etc)
+- [ ] TODA a configuração de deploy (EasyPanel)
+
+## INSTRUÇÃO FINAL ABSOLUTA
+
+SEJA ESPECÍFICO. Não diga "criar uma action para gerenciar produtos". Diga exatamente:
+
+"Criar action `createProduct` que recebe {name: string (min 3), price: number (min 0.01), stock: number (int, min 0)}, valida com Zod, insere no banco com organizationId do Clerk, retorna {success, data} ou {success, error}, e chama revalidatePath('/dashboard/products')."
+
+Crie o SPECS.md agora, completo, técnico, copiável e colável para desenvolvimento.
+
